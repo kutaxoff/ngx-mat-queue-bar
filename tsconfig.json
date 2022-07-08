@@ -9,9 +9,8 @@
     "declaration": false,
     "module": "es2020",
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es2015",
+    "target": "es2020",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -20,9 +19,9 @@
       "dom"
     ],
     "paths": {
-      "ngx-queue-bar": [
-        "dist/ngx-queue-bar/ngx-queue-bar",
-        "dist/ngx-queue-bar"
+      "ngx-mat-queue-bar": [
+        "dist/ngx-mat-queue-bar/ngx-mat-queue-bar",
+        "dist/ngx-mat-queue-bar"
       ]
     }
   }

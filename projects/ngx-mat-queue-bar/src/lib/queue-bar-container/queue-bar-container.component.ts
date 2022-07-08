@@ -61,7 +61,7 @@ export class QueueBarContainerComponent implements OnDestroy {
             const onEnter = this._onEnter;
 
             this._ngZone.run(() => {
-                onEnter.next();
+                onEnter.next(undefined);
                 onEnter.complete();
             });
         }
@@ -91,7 +91,7 @@ export class QueueBarContainerComponent implements OnDestroy {
 
     private _completeExit() {
         this._ngZone.onMicrotaskEmpty.asObservable().pipe(take(1)).subscribe(() => {
-            this._onExit.next();
+            this._onExit.next(undefined);
             this._onExit.complete();
         });
     }

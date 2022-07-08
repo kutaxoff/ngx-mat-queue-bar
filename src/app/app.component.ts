@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { QueueBarService } from 'projects/ngx-queue-bar/src/public-api';
+import { QueueBarService } from 'projects/ngx-mat-queue-bar/src/public-api';
 import { MatSnackBarVerticalPosition, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
 
 @Component({

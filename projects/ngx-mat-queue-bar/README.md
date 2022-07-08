@@ -1,4 +1,4 @@
-# Angular Material based Queue bar
+# NG Mat queue bar
 
 Stack snackbars on top of one another. Display multiple snackbars at once.
 

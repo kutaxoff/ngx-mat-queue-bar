@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { QueueBarModule } from 'projects/ngx-queue-bar/src/public-api';
+import { QueueBarModule } from 'projects/ngx-mat-queue-bar/src/public-api';
 
 @NgModule({
     declarations: [

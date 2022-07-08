@@ -1,0 +1,29 @@
+{
+    "name": "ngx-mat-queue-bar",
+    "version": "14.0.0",
+    "description": "Display multiple stacked snackbars in Angular material",
+    "author": "ANovokmet <ante.je.zakon@gmail.com> & marcindz88 <marcindz88@gmail.com>",
+    "keywords": [
+        "angular",
+        "snackbar",
+        "multiple",
+        "stacked",
+        "angular-material",
+        "ngx-mat-queue-bar"
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/marcindz88/ngx-mat-queue-bar#readme",
+    "repository": "github:marcindz88/ngx-mat-queue-bar",
+    "bugs": {
+        "url": "https://github.com/marcindz88/ngx-mat-queue-bar/issues"
+    },
+    "peerDependencies": {
+        "@angular/common": "^14.0.0",
+        "@angular/core": "^14.0.0",
+        "@angular/cdk": "^14.0.0",
+        "@angular/material": "^14.0.0"
+    },
+    "dependencies": {
+      "tslib": "^2.4.0"
+    }
+}

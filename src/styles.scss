@@ -1,14 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
-@import '~@angular/material/theming';
+@import '@angular/material/theming';
 
-@import '~@angular/material/core/typography/typography-utils';
-@import '~@angular/material/core/theming/palette';
-@import '~@angular/material/core/style/elevation';
+@import '@angular/material/core/typography/typography-utils';
+@import '@angular/material/core/theming/palette';
+@import '@angular/material/core/style/elevation';
 
 @mixin mat-snack-bar-theme($theme) {
   $is-dark-theme: map-get($theme, is-dark);
@@ -18,21 +19,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     // Use the primary text on the dark theme, even though the lighter one uses
     // a secondary, because the contrast on the light primary text is poor.
     color: if($is-dark-theme, $dark-primary-text, $light-secondary-text);
-    background: if($is-dark-theme, map-get($mat-grey, 50), #323232);
+    background: if($is-dark-theme, map-get(mat.$grey-palette, 50), #323232);
 
     @include _mat-theme-elevation(6, $theme);
   }
 
   .mat-simple-snackbar-action {
-    color: if($is-dark-theme, inherit, mat-color($accent, text));
+    color: if($is-dark-theme, inherit, mat.get-color-from-palette($accent, text));
   }
 }
 
 @mixin mat-snack-bar-typography($config) {
   .mat-simple-snackbar {
     font: {
-      family: mat-font-family($config, body-1);
-      size: mat-font-size($config, body-1);
+      family: mat.font-family($config, body-1);
+      size: mat.font-size($config, body-1);
     }
   }
 
@@ -41,22 +42,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     font: {
       family: inherit;
       size: inherit;
-      weight: mat-font-weight($config, button);
+      weight: mat.font-weight($config, button);
     }
   }
 }
 
 
 // Include non-theme styles for core.
-@include mat-core();
+@include mat.core();
 
 // Define your application's custom theme.
-$primary: mat-palette($mat-indigo);
-$accent:  mat-palette($mat-pink, A200, A100, A400);
-$theme: mat-light-theme($primary, $accent);
+$primary: mat.define-palette(mat.$indigo-palette);
+$accent:  mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$theme: mat.define-light-theme($primary, $accent);
 
 // Include theme styles for your custom components.
-@include mat-snack-bar-theme($theme);
+@include mat.snack-bar-theme($theme);
 
 
 

@@ -17,7 +17,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
             "outputPath": "dist/QueueBarDemo",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -27,11 +26,20 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules"]
+            },
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -44,9 +52,7 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -62,7 +68,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -98,18 +105,6 @@
               "src/assets"
             ]
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -129,58 +124,36 @@
               "devServerTarget": "QueueBarDemo:serve:production"
             }
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
-    "ngx-queue-bar": {
+    "ngx-mat-queue-bar": {
       "projectType": "library",
-      "root": "projects/ngx-queue-bar",
-      "sourceRoot": "projects/ngx-queue-bar/src",
+      "root": "projects/ngx-mat-queue-bar",
+      "sourceRoot": "projects/ngx-mat-queue-bar/src",
       "prefix": "qb",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "projects/ngx-queue-bar/tsconfig.lib.json",
-            "project": "projects/ngx-queue-bar/ng-package.json"
+            "tsConfig": "projects/ngx-mat-queue-bar/tsconfig.lib.json",
+            "project": "projects/ngx-mat-queue-bar/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/ngx-queue-bar/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ngx-mat-queue-bar/tsconfig.lib.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngx-queue-bar/src/test.ts",
-            "tsConfig": "projects/ngx-queue-bar/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-queue-bar/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/ngx-queue-bar/tsconfig.lib.json",
-              "projects/ngx-queue-bar/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "main": "projects/ngx-mat-queue-bar/src/test.ts",
+            "tsConfig": "projects/ngx-mat-queue-bar/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-mat-queue-bar/karma.conf.js"
           }
         }
       }
     }
-  },
-  "defaultProject": "QueueBarDemo"
+  }
 }

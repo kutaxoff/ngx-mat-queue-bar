@@ -12,7 +12,6 @@ import { PortalModule } from '@angular/cdk/portal';
 @NgModule({
     declarations: [QueueBarContainerComponent, SimpleQueueBarComponent, QueueComponent],
     imports: [CommonModule, OverlayModule, MatButtonModule, MatSnackBarModule, PortalModule],
-    exports: [],
-    entryComponents: [QueueBarContainerComponent, SimpleQueueBarComponent],
+    exports: []
 })
 export class QueueBarModule { }

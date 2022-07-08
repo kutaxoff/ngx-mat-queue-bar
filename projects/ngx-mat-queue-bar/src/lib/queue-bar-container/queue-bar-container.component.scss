@@ -1,3 +1,4 @@
+@use '@angular/cdk' as cdk;
 :host {
     // box-sizing: border-box;
     // display: block;
@@ -19,7 +20,7 @@
     margin-top: 12px;
 }
 
-@import '~@angular/cdk/a11y/a11y';
+@import '@angular/cdk/a11y';
 
 $mat-snack-bar-padding: 14px 16px !default;
 $mat-snack-bar-min-height: 48px !default;
@@ -40,7 +41,7 @@ $mat-snack-bar-spacing-margin-handset: 8px !default;
     min-height: $mat-snack-bar-min-height;
     transform-origin: center;
 
-    @include cdk-high-contrast(active, off) {
+    @include cdk.high-contrast(active, off) {
         border: solid 1px;
     }
 }
