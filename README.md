@@ -2,7 +2,7 @@
 
 Stack snackbars on top of one another. Display multiple snackbars at once.
 
-This library is a forked copy of [NgxQueueBar](https://github.com/ANovokmet/NgxQueueBar) with updated dependencies and added support for snackbars opened from component
+This library is a forked copy of [NgxQueueBar](https://github.com/ANovokmet/NgxQueueBar) with updated dependencies, added support for snackbars opened from component, maximum number of snackbars configuration and others.
 
 NgxQueueBar is basically a copy of [MatSnackBar](https://github.com/angular/components/tree/master/src/material/snack-bar), with some key methods changed. Because of this you can use it using the API identical to MatSnackBar one.
 
@@ -68,6 +68,30 @@ open(message: string, action: string) {
     });
 }
 ```
+
+### Maximum number of snackbars config
+
+The use of the queue with unlimited snackbars popping up is restricted to when there is small number of snackbars active
+Hence I have added the ability to specify maximum amount of snackbars that can be active at a given moment.
+
+Default max amount of visible snackbars is 4
+
+You may change this setting using a provider of injection token QUEUE_BAR_CONFIG as follows:
+
+```
+const queueBarConfig: QueueBarConfig = { maxOpenedSnackbars: 20 };
+
+...
+providers: [
+  {
+    provide: QUEUE_BAR_CONFIG,
+    useValue: queueBarConfig,
+  }
+]
+```
+
+It is important to note that this condition may be fulfilled only if the snackbars are timed that is have duration greater than 0.
+Snackbars with duration equal to 0, can only be dismissed manually and hence if there are more than max untimed snackbars they will not be hidden.
 
 ## Note
 

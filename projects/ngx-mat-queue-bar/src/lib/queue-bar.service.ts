@@ -1,4 +1,4 @@
-import { Injectable, Injector, EmbeddedViewRef, TemplateRef, ComponentFactoryResolver, InjectionToken, Inject } from '@angular/core';
+import { Injectable, Injector, EmbeddedViewRef, TemplateRef, ComponentFactoryResolver, Inject } from '@angular/core';
 import { PortalInjector, ComponentPortal, ComponentType } from '@angular/cdk/portal';
 import { OverlayRef, Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -11,20 +11,7 @@ import { QueueComponent } from './queue/queue.component';
 import { QueueBarContainerComponent } from './queue-bar-container/queue-bar-container.component';
 import { SimpleQueueBarComponent } from './simple-queue-bar/simple-queue-bar.component';
 import { QueueBarRef } from './queue-bar-ref';
-import { QUEUE_BAR_DATA } from './queue-bar-config';
-
-
-/** Injection token that can be used to specify default snack bar. */
-export const QUEUE_BAR_DEFAULT_OPTIONS =
-    new InjectionToken<MatSnackBarConfig>('queue-bar-default-options', {
-        providedIn: 'root',
-        factory: QUEUE_BAR_DEFAULT_OPTIONS_FACTORY,
-    });
-
-/** @docs-private */
-export function QUEUE_BAR_DEFAULT_OPTIONS_FACTORY(): MatSnackBarConfig {
-    return new MatSnackBarConfig();
-}
+import { QUEUE_BAR_DEFAULT_OPTIONS, QUEUE_BAR_CONFIG, QUEUE_BAR_DATA, QueueBarConfig } from './queue-bar-config';
 
 /**
  * Service to queue material snack bars.
@@ -34,13 +21,17 @@ export class QueueBarService {
     overlayRef: OverlayRef;
     queue: QueueComponent;
 
+    private _activeTimedSnackbars: QueueBarRef<any>[] = [];
+    private _activeUntimedSnackbars: QueueBarRef<any>[] = [];
+
     constructor(
         private _overlay: Overlay,
         private _live: LiveAnnouncer,
         private _injector: Injector,
         private _breakpointObserver: BreakpointObserver,
         private _resolver: ComponentFactoryResolver,
-        @Inject(QUEUE_BAR_DEFAULT_OPTIONS) private _defaultConfig: MatSnackBarConfig
+        @Inject(QUEUE_BAR_DEFAULT_OPTIONS) private _defaultConfig: MatSnackBarConfig,
+        @Inject(QUEUE_BAR_CONFIG) private _globalConfig: QueueBarConfig
     ) { }
 
     /**
@@ -108,7 +99,25 @@ export class QueueBarService {
         snackBarRef.container = container;
         snackBarRef.containerInstance = container.instance;
 
+        if (config.duration) {
+          this._activeTimedSnackbars.push(snackBarRef);
+        } else {
+          this._activeUntimedSnackbars.push(snackBarRef);
+        }
+
+        // Remove first visible snackbar if max exceeded
+        if (this._activeTimedSnackbars.length + this._activeUntimedSnackbars.length > this._globalConfig.maxOpenedSnackbars) {
+          if (this._activeTimedSnackbars.length) {
+            this._activeTimedSnackbars[0].dismiss();
+            this._activeTimedSnackbars.slice(1);
+          } else {
+            console.warn(`Unable to keep the limit of ${this._globalConfig.maxOpenedSnackbars} opened snackbars,` +
+              'as there are too much untimed snackbars opened (with duration = 0)');
+          }
+        }
+
         if (content instanceof TemplateRef) {
+          // TODO
             // const portal = new TemplatePortal(content, null!, {
             //     $implicit: config.data,
             //     snackBarRef
@@ -138,34 +147,24 @@ export class QueueBarService {
 
     private createContainerRef() {
         const factory = this._resolver.resolveComponentFactory(QueueBarContainerComponent);
-        const containerRef = factory.create(this._injector);
-        return containerRef;
+        return factory.create(this._injector);
     }
 
     private _animateSnackBar(snackBarRef: QueueBarRef<any>, config: MatSnackBarConfig) {
-        // When the snackbar is dismissed, clear the reference to it.
+        // When the snackbar is dismissed, remove from active snackbars
         snackBarRef.afterDismissed().subscribe(() => {
-            // Clear the snackbar ref if it hasn't already been replaced by a newer snackbar.
-            // if (this._openedSnackBarRef == snackBarRef) {
-            //     this._openedSnackBarRef = null;
-            // }
+          // Remove snackbar from active snackbars
+          if (config.duration) {
+            this._removeQueueBarReferenceFromList(this._activeTimedSnackbars, snackBarRef);
+          } else {
+            this._removeQueueBarReferenceFromList(this._activeUntimedSnackbars, snackBarRef);
+          }
 
             if (config.announcementMessage) {
                 this._live.clear();
             }
         });
 
-        // if (this._openedSnackBarRef) {
-        //     // If a snack bar is already in view, dismiss it and enter the
-        //     // new snack bar after exit animation is complete.
-        //     this._openedSnackBarRef.afterDismissed().subscribe(() => {
-        //         snackBarRef.containerInstance.enter();
-        //     });
-        //     this._openedSnackBarRef.dismiss();
-        // } else {
-        //     // If no snack bar is in view, enter the new snack bar.
-        //     snackBarRef.containerInstance.enter();
-        // }
         snackBarRef.containerInstance.enter();
 
         // If a dismiss timeout is provided, set up dismiss based on after the snackbar is opened.
@@ -233,5 +232,9 @@ export class QueueBarService {
             [QueueBarRef, queueBarRef],
             [QUEUE_BAR_DATA, config.data]
         ]));
+    }
+
+    private _removeQueueBarReferenceFromList(list: QueueBarRef<any>[], queueBarToBeRemoved: QueueBarRef<any>): void {
+      list.splice(list.findIndex(snackbar => snackbar === queueBarToBeRemoved), 1);
     }
 }
