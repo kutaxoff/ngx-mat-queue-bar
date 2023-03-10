@@ -7,7 +7,7 @@ $mat-snack-bar-button-height: 36px !default;
 $mat-snack-bar-line-height: 20px !default;
 // Button vertical margin is used to ensure that a button height of 36px, when the containing
 // space falls below 36px.
-$mat-snack-bar-button-vertical-margin: -(($mat-snack-bar-button-height - $mat-snack-bar-line-height) / 2);
+$mat-snack-bar-button-vertical-margin: - calc(($mat-snack-bar-button-height - $mat-snack-bar-line-height) / 2);
 
 .mat-simple-snackbar, :host {
     display: flex;
