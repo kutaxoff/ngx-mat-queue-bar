@@ -85,7 +85,7 @@ export class QueueBarService {
 
         const config = { ...new MatSnackBarConfig(), ...this._defaultConfig, ...userConfig };
 
-        if (!this.queue || !this.overlayRef) {
+        if (!this.queue || !this.overlayRef?.hostElement) {
             const overlayRef = this._createOverlay(config);
             const queue = this._attachQueue(overlayRef, config);
 
@@ -97,7 +97,7 @@ export class QueueBarService {
         }
 
         const container = this.createContainerRef();
-        const snackBarRef = new QueueBarRef<T | EmbeddedViewRef<any>>(this.queue, container);
+        const snackBarRef = new QueueBarRef<T | EmbeddedViewRef<any>>(this.queue, container, this.overlayRef);
         // we need to create the containers manually to subscribe to events;
         snackBarRef.container = container;
         snackBarRef.containerInstance = container.instance;

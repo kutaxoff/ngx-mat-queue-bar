@@ -36,6 +36,10 @@ export class QueueComponent implements OnInit {
         }
     }
 
+    get isEmpty() {
+        return !this._container.get(0)
+    }
+
     private _applySnackBarClasses() {
         const element: HTMLElement = this._elementRef.nativeElement;
         const panelClasses = this.snackBarConfig.panelClass;

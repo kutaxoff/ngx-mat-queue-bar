@@ -2,6 +2,7 @@ import { ViewRef, ComponentRef } from '@angular/core';
 import { MatSnackBarDismiss } from '@angular/material/snack-bar';
 import { Subject, Observable } from 'rxjs';
 import { Portal } from '@angular/cdk/portal';
+import { OverlayRef } from '@angular/cdk/overlay';
 
 import { QueueBarContainerComponent } from './queue-bar-container/queue-bar-container.component';
 import { QueueComponent } from './queue/queue.component';
@@ -31,7 +32,7 @@ export class QueueBarRef<T> {
 
     private _dismissedByAction = false;
 
-    constructor(queue: QueueComponent, container: ComponentRef<QueueBarContainerComponent>) {
+    constructor(queue: QueueComponent, container: ComponentRef<QueueBarContainerComponent>, private _overlayRef: OverlayRef) {
         this.queue = queue;
         this.container = container;
         this.containerInstance = container.instance;
@@ -71,7 +72,9 @@ export class QueueBarRef<T> {
     }
 
     private _finishDismiss(): void {
-        // this._overlayRef.dispose();
+        if (this.queue.isEmpty) {
+            this._overlayRef.dispose();
+        }
 
         if (!this._onAction.closed) {
             this._onAction.complete();
