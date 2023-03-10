@@ -1,5 +1,5 @@
 {
-    "name": "ngx-mat-queue-bar",
+    "name": "@erengee/ngx-mat-queue-bar",
     "version": "14.2.0",
     "description": "Display multiple stacked snackbars in Angular material",
     "author": "ANovokmet <ante.je.zakon@gmail.com> & marcindz88 <marcindz88@gmail.com> & erengee <kutaxoff@icloud.com>",
