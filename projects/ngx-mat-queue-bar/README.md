@@ -2,9 +2,12 @@
 
 Stack snackbars on top of one another. Display multiple snackbars at once.
 
-This library is a forked copy of [NgxQueueBar](https://github.com/ANovokmet/NgxQueueBar) with updated dependencies, added support for snackbars opened from component, maximum number of snackbars configuration and others.
+This library is a forked copy of [NgxMatQueueBar](https://github.com/marcindz88/ngx-mat-queue-bar) with few small changes:
+- overlay is now being disposed if queue of snackbars is empty
+- added new `wrapperClass` setting in config to set a CSS class name for cdk-global-overlay-wrapper  
+(it allows, for example, setting custom `z-index` for snackbar overlay to always display it on top of other overlays)
 
-NgxQueueBar is basically a copy of [MatSnackBar](https://github.com/angular/components/tree/master/src/material/snack-bar), with some key methods changed. Because of this you can use it using the API identical to MatSnackBar one.
+NgxMatQueueBar is an updated copy of [NgxQueueBar](https://github.com/ANovokmet/NgxQueueBar), which is basically a copy of [MatSnackBar](https://github.com/angular/components/tree/master/src/material/snack-bar), with some key methods changed. Because of this you can use it using the API identical to MatSnackBar one.
 
 ## Demo
 
