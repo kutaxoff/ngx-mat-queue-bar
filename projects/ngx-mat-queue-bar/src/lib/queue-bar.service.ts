@@ -90,6 +90,9 @@ export class QueueBarService {
             const queue = this._attachQueue(overlayRef, config);
 
             this.overlayRef = overlayRef;
+            if (this._globalConfig.wrapperClass) {
+                this.overlayRef.hostElement.className += ` ${this._globalConfig.wrapperClass}`
+            }
             this.queue = queue;
         }
 

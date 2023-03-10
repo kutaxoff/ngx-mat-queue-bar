@@ -17,6 +17,7 @@ export function QUEUE_BAR_DEFAULT_OPTIONS_FACTORY(): MatSnackBarConfig {
 
 export type QueueBarConfig = {
   maxOpenedSnackbars: number;
+  wrapperClass?: string;
 };
 
 export const defaultQueueBarConfig: QueueBarConfig = {
